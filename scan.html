@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner for Product Details</title>
+    <script src="https://unpkg.com/html5-qrcode" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(to right, #6a11cb, #a4b8dc);
+            color: white;
+            text-align: center;
+        }
+        #reader {
+            width: 320px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .details {
+            width: 320px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            text-align: center;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        .start-button {
+            background: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Scan QR Code for Product Details</h2>
+    <div id="reader"></div>
+    <div class="buttons">
+        <button class="start-button" onclick="startScanner()">Start Scanner</button>
+    </div>
+    
+    <div class="details">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" readonly>
+        
+        <label for="product-id">Product ID:</label>
+        <input type="text" id="product-id" readonly>
+        
+        <label for="quantity">Quantity:</label>
+        <input type="text" id="quantity" readonly>
+    </div>
+
+    <script>
+        let scanner;
+
+        function onScanSuccess(decodedText) {
+            console.log("Scanned Data:", decodedText);
+            try {
+                let data;
+                if (decodedText.startsWith('{') && decodedText.endsWith('}')) {
+                    // Assuming the QR code contains a JSON string
+                    data = JSON.parse(decodedText);
+                } else {
+                    // Assuming the QR code contains a comma-separated string
+                    let parts = decodedText.split(',').map(part => part.trim());
+                    console.log("Extracted Parts:", parts);
+                    if (parts.length >= 3) {
+                        data = { name: parts[0], id: parts[1], quantity: parts[2] };
+                    } else {
+                        throw new Error("Invalid QR code format");
+                    }
+                }
+                
+                console.log("Parsed Data:", data);
+                document.getElementById('product-name').value = data.name || "";
+                document.getElementById('product-id').value = data.id || "";
+                document.getElementById('quantity').value = data.quantity || "";
+                
+                console.log("Updated Inputs:", 
+                    document.getElementById('product-name').value, 
+                    document.getElementById('product-id').value, 
+                    document.getElementById('quantity').value
+                );
+                stopScanner();
+            } catch (error) {
+                console.error("Error processing QR code:", error);
+            }
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR scan failed: ${error}`);
+        }
+
+        function startScanner() {
+            if (!scanner) {
+                scanner = new Html5Qrcode("reader");
+            }
+            scanner.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: 250 },
+                onScanSuccess,
+                onScanFailure
+            ).catch(err => console.error("Failed to start scanner", err));
+        }
+
+        function stopScanner() {
+            if (scanner) {
+                scanner.stop().then(() => {
+                    scanner.clear();
+                    scanner = null;
+                }).catch(err => console.error("Failed to stop scanner", err));
+            }
+        }
+    </script>
+</body>
+</html>

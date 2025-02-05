@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Calculation</title>
+     <link rel="stylesheet" href="styles.css"> 
+</head>
+<body  text color=" white" >
+    
+    <div class="container_1-fluid">
+        
+        <header>
+            <h1>Production Calculation</h1>
+        </header>
+        <br>
+    </div>
+    <div class="container_2-fluid">
+       
+            <form>
+                <label for="num-products">Enter the number of Products to Produce:</label>
+                <input type="number" id="num-products" min="1" placeholder="Enter number of products">
+            </form>
+            <br>
+                <button onclick="generateProductForms()">Next</button>
+                <div class="br">
+                    <from>
+                    <div id="product-forms-section"></div>
+                    <br>
+                </from>
+            
+        </div>
+             
+    </div>
+    
+   
+   
+    <div class="container_3-fluid" id="output-section" style="display: none;">
+        <div class="cardoutput-section">
+            <h4  style="color: brown;">PRODUCTION OUTPUT</h4>
+            <p><em><strong>Total Manufacturing Time:</strong> </em> <span id="total-time"></span> minutes</p>
+            <p> <em> <strong>Total Foldyphones Produced:</strong> </em> <span id="foldyphones-produced"></span>per day</p>
+            <p><em><strong>Total Tinyphones Produced:</strong></em> <span id="tinyphones-produced"></span>per day</p>
+
+            <h4 style="color: brown;">MACHINE ALLOCATION BREAKDOWN:</h4>
+            <div id="machine-allocation"></div>
+            <div class="card">
+            <p id="Machine_1"><strong style="color:brown"> Machine 1:</strong> <span>Foldyphones - 65   &nbsp; Tinyphones - 56</span></p>
+            <p id="Machine_2"><strong style="color:brown"> Machine 2:</strong> <span>Foldyphones - 133  &nbsp;&nbsp;Tinyphones - 119</span></p>
+            <p id="Machine_3"><strong style="color:brown"> Machine 3:</strong> <span>Foldyphones - 50  &nbsp;&nbsp;Tinyphones - 196</span></p>
+            <p id="Machine_4"><strong style="color:brown"> Machine 4:</strong> <span>Foldyphones - 51  &nbsp;&nbsp;Tinyphones - 61</span></p>
+            <p id="Machine_5"><strong style="color:brown"> Machine 5:</strong> <span>Foldyphones - 80</span></p>
+            <p id="Machine_6"><strong style="color:brown"> Machine 6:</strong> <span>Foldyphones - 102</span></p>
+            <p id="Machine_7"><strong style="color:brown"> Machine 7:</strong> <span>Tinyphones - 102</span></p>
+        </div>
+           
+            <h4 style="color: brown;">PRODUCTION TIME :</h4>
+            <p><strong>Total time to produce Foldyphones:</strong> <span id="foldyphones-time"></span> minutes</p>
+            <p><strong>Total time to produce Tinyphones:</strong> <span id="tinyphones-time"></span> minutes</p>
+            <p><strong>Calculated Delivery Date:</strong> <span id="delivery-date-output"></span></p>
+        </div>
+    </div>
+
+ <!-- footer content -->
+    <div class="container_4">
+        <footer>
+            <p> Production Calculation for Manufacturing </p>
+        </footer>
+    </div>
+   </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
