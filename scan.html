@@ -39,7 +39,7 @@
             margin-top: 10px;
         }
         input {
-            width: 100%;
+            width: 70%;
             padding: 10px;
             margin-top: 5px;
             font-size: 16px;
@@ -89,7 +89,7 @@
     </div>
 
     <script>
-        let scanner;
+       let scanner; 
 
         function onScanSuccess(decodedText) {
             console.log("Scanned Data:", decodedText);
@@ -110,15 +110,11 @@
                 }
                 
                 console.log("Parsed Data:", data);
-                document.getElementById('product-name').value = data.name || "";
-                document.getElementById('product-id').value = data.id || "";
-                document.getElementById('quantity').value = data.quantity || "";
+                document.getElementById('product-name').value = data.ProductName || "";
+                document.getElementById('product-id').value = data.ProductID || "";
+                document.getElementById('quantity').value = data.Quantity || "";
                 
-                console.log("Updated Inputs:", 
-                    document.getElementById('product-name').value, 
-                    document.getElementById('product-id').value, 
-                    document.getElementById('quantity').value
-                );
+               
                 stopScanner();
             } catch (error) {
                 console.error("Error processing QR code:", error);
