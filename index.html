@@ -1,46 +1,74 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Calculation</title>
-     <link rel="stylesheet" href="styles.css"> 
+     <link rel="stylesheet" href="styles.css">
+	 <script src="https://unpkg.com/html5-qrcode" defer></script>
+
+
 </head>
 <body  text color=" white" >
-    
+   
     <div class="container_1-fluid">
-        
+       
         <header>
             <h1>Production Calculation</h1>
         </header>
         <br>
     </div>
-    <div class="container_2-fluid">
-       
-            <form>
-                <label for="num-products">Enter the number of Products to Produce:</label>
-                <input type="number" id="num-products" min="1" placeholder="Enter number of products">
-            </form>
-            <br>
+    <div class="container_2-fluid" style="display: flex; justify-content: space-between; gap: 20px;">
+         <!-- Left Side: Manual Entry -->
+        <div class="card" id="cardManual">
+            <div style="width: 50%;">
+                <h2>Enter Manually</h2>
+                <form>
+                    <label for="num-products">Enter the number of Products to Produce:</label>
+                    <input type="number" id="num-products" min="1" placeholder="Enter number of products">
+                </form>
+                <br>
                 <button onclick="generateProductForms()">Next</button>
-                <div class="br">
-                    <from>
-                    <div id="product-forms-section"></div>
-                    <br>
-                </from>
-            
+                <div id="product-forms-section"></div>
+            </div>
         </div>
-             
+       
+        <!-- Right Side: QR Scanner -->
+         <div class="card" id="cardQR">
+            <div style="width: 50%;">
+                <h2>Use QR Scanner</h2>
+                <button id="start-button" onclick="startScanner()">Start</button>
+       
+                <!-- Scanner Container (Initially Hidden) -->
+                <div id="scanner-container" style="display: none;">
+                    <h3>Scan QR Code</h3>
+                    <div id="reader"></div>
+                </div>
+         </div>
+   
+            <!-- Input Fields (Initially Hidden) -->
+            <div id="product-details" style="display: none;">
+                <label for="product-name">Product Name:</label>
+                <input type="text" id="product-name" readonly>
+   
+                <label for="product-id">Product ID:</label>
+                <input type="text" id="product-id" readonly>
+   
+                <label for="quantity">Quantity:</label>
+                <input type="text" id="quantity" readonly>
+            </div>
+        </div>
     </div>
-    
-   
-   
+
+
     <div class="container_3-fluid" id="output-section" style="display: none;">
         <div class="cardoutput-section">
             <h4  style="color: brown;">PRODUCTION OUTPUT</h4>
             <p><em><strong>Total Manufacturing Time:</strong> </em> <span id="total-time"></span> minutes</p>
             <p> <em> <strong>Total Foldyphones Produced:</strong> </em> <span id="foldyphones-produced"></span>per day</p>
             <p><em><strong>Total Tinyphones Produced:</strong></em> <span id="tinyphones-produced"></span>per day</p>
+
 
             <h4 style="color: brown;">MACHINE ALLOCATION BREAKDOWN:</h4>
             <div id="machine-allocation"></div>
@@ -61,6 +89,7 @@
         </div>
     </div>
 
+
  <!-- footer content -->
     <div class="container_4">
         <footer>
@@ -68,6 +97,7 @@
         </footer>
     </div>
    </div>
+
 
     <script src="script.js"></script>
 </body>
