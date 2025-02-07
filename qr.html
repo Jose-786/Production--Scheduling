@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+
+    <!-- Load QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #qrcode {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Generate QR Code for Product</h2>
+
+    <!-- Product Details Form -->
+    <label>Product Name:</label>
+    <input type="text" id="productName" placeholder="Enter product name">
+
+    <label>Product Quantity:</label>
+    <input type="number" id="productQuantity" min="1" placeholder="Enter quantity">
+
+    <label>Product ID:</label>
+    <input type="text" id="productId" placeholder="Enter product ID">
+
+    <br>
+    <button onclick="generateQRCode()">Generate QR Code</button>
+
+    <!-- QR Code Display -->
+    <div id="qrcode"></div>
+
+    <script>
+        function generateQRCode() {
+            let name = document.getElementById("productName").value.trim();
+            let quantity = document.getElementById("productQuantity").value.trim();
+            let id = document.getElementById("productId").value.trim();
+
+            if (!name || !quantity || !id) {
+                alert("Please enter all product details.");
+                return;
+            }
+
+            // Format the data as a JSON string
+            let productData = JSON.stringify({
+                ProductName: name,
+                Quantity: quantity,
+                ProductID: id
+            });
+            console.log(productData);
+            
+
+            // Clear previous QR code
+            document.getElementById("qrcode").innerHTML = "";
+
+            // Generate QR Code
+            new QRCode(document.getElementById("qrcode"), {
+                text: productData,
+                width: 200,
+                height: 200
+            });
+        }
+    </script>
+
+</body>
+</html>
